@@ -62,7 +62,7 @@
         <form id="nestForm" class="quick-mode">
           <div class="admin-field-heading">Public record — only shown after approval</div>
           <div class="form-grid">
-            <label>Public nest ID *<input name="id" required maxlength="40" placeholder="PM-2026-001" pattern="[A-Za-z0-9_-]+"></label>
+            <label>Public nest ID *<input name="id" required maxlength="40" placeholder="PM-2026-001" pattern="(?:[A-Za-z0-9_]|-)+"></label>
             <label>Season year (from relocation date) *<input name="season" type="number" required min="2000" max="2100" readonly title="Automatically derived from the relocation date"></label>
             <label>Species *<select name="species" required><option value="Green turtle">Green turtle</option><option value="Hawksbill turtle">Hawksbill turtle</option><option value="Olive ridley turtle">Olive ridley turtle</option><option value="Other / unconfirmed">Other / unconfirmed</option></select></label>
             <label class="detail-only">Nest status *<select name="status" required><option value="incubating">Incubating</option><option value="excavated">Excavated</option><option value="emerged">Emerged</option></select></label>
