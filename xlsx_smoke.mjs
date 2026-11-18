@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {buildXlsx} from '../assets/xlsx-export.js';
+const bytes=buildXlsx([{name:'Approved Nests',rows:[['Nest ID','Eggs','Note'],['PM-2026-001',88,'=1+1'],['PM-2026-002',94,'& nesting']]}]);
+assert.ok(bytes.length>1000);
+const dataview=new DataView(bytes.buffer,bytes.byteOffset,bytes.byteLength);
+assert.equal(dataview.getUint32(0,true),0x04034b50);
+const xml=new TextDecoder().decode(bytes);
+assert.match(xml,/inlineStr/);
+assert.match(xml,/PM-2026-001/);
+assert.match(xml,/&amp; nesting/);
+assert.doesNotMatch(xml,/<f>1\+1<\/f>/);
+assert.equal(dataview.getUint32(bytes.length-22,true),0x06054b50);
+console.log('XLSX binary signatures + escaped strings + no formulas: PASS');

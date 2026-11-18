@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#062f39"><title>Staff submissions & approval | TRACC Hatchery</title>
+  <link rel="icon" href="./assets/tracc-logo.webp" type="image/png">
+  <script src="./assets/theme-boot.js"></script>
+  <link rel="stylesheet" href="./assets/styles.css">
+  <script type="module" src="./assets/admin.js"></script>
+</head>
+<body class="admin-page">
+<div class="test-mode-strip" role="status"><strong>FIELD-TEST DEMO · FICTIONAL DATA ONLY</strong><span>No real staff login, no shared database, no confidential data.</span><a href="./testing.html">Testing guide</a></div>
+<header class="site-header"><div class="container nav-inner">
+  <a href="https://tracc.org/" class="brand" target="_blank" rel="noopener noreferrer" aria-label="Visit the official TRACC website"><span class="brand-logo-wrap"><img class="brand-logo" src="./assets/tracc-wordmark.webp" alt="TRACC logo"></span>
+    <span><span class="brand-name sr-only">TRACC</span><span class="brand-caption">HATCHERY STAFF PORTAL</span></span></a>
+  <div class="staff-nav-actions"><button type="button" class="theme-switch" id="themeSwitch" aria-label="Switch to dark mode" title="Switch theme" aria-pressed="false"><span class="theme-switch-icon" aria-hidden="true">☾</span><span class="theme-switch-label">Dark</span></button><a href="./index.html" class="nav-action">← Public portal</a></div>
+</div></header>
+<main class="container admin-main">
+  <div class="admin-title"><span class="small-label">HATCHERY MANAGEMENT · QUALITY CONTROL</span>
+    <h1>Nest data, <em>reviewed.</em></h1>
+    <p>Wardens log new nests or follow-up observations. Administrators approve, return for correction, or reject submissions before public records change.</p>
+  </div>
+  <div class="admin-banner" id="adminMessage" role="status" aria-live="polite">Loading staff portal…</div>
+  <section class="admin-login" id="loginSection" hidden>
+    <h2>Approved staff sign-in</h2>
+    <p>Use your TRACC hatchery account to submit changes or review requests. Access is enforced by the database, not this page.</p>
+    <form id="loginForm">
+      <label>Email<input id="loginEmail" type="email" autocomplete="username" required></label>
+      <label>Password<input id="loginPassword" type="password" autocomplete="current-password" required></label>
+      <button class="btn btn-dark" type="submit">Sign in</button>
+    </form>
+  </section>
+  <section id="editorSection" hidden>
+    <div class="editor-toolbar"><div><strong id="editorModeLabel">Local demonstration</strong><p id="editorModeHelp">Local review is not authentication or automatic publishing.</p></div>
+      <div class="toolbar-actions">
+        <button class="btn btn-outline" type="button" id="importButton" hidden>Import request</button>
+        <input type="file" id="importInput" hidden accept="application/json,.json">
+        <button class="btn btn-outline" type="button" id="exportButton" hidden>Download approved nests</button>
+        <button class="btn btn-outline" type="button" id="logoutButton" hidden>Sign out</button>
+      </div>
+    </div>
+    <div class="workflow-strip" aria-label="Approval workflow"><span><b>1</b> Warden submits a new nest or milestone</span><span><b>2</b> Administrator reviews</span><span><b>3</b> Approved record appears publicly</span></div>
+    <div class="editor-grid">
+      <aside class="admin-list-panel">
+        <div class="panel-heading"><h2>Approved nests</h2><button type="button" class="small-add" id="newNest">+ New</button> <button type="button" id="resetDemo" class="btn btn-outline" title="Erase fictional demo changes saved on this browser">Reset demo data</button></div>
+        <label class="search-wrap"><span class="sr-only">Search published nests</span><input id="adminSearch" type="search" placeholder="Search nest ID…"></label>
+        <div id="adminNestList" class="admin-nest-list"></div>
+        <p class="staff-helper">Choose an approved nest to submit an emergence, release, or excavation milestone. Administrators can also propose corrections. Previously approved information stays unchanged until review.</p>
+      </aside>
+      <section class="admin-form-panel">
+        <div class="panel-heading"><h2 id="formTitle">New nest submission</h2><span class="field-tag">* Required</span></div>
+        <div class="entry-mode-controls" id="entryModeControls" role="group" aria-label="Choose data entry speed">
+          <button class="mode-chip active" type="button" id="quickMode" aria-pressed="true">⚡ Quick entry</button>
+          <button class="mode-chip" type="button" id="detailedMode" aria-pressed="false">☷ Detailed entry</button>
+          <span class="mode-help">Quick entry captures essential relocation fields; detailed entry opens research sections.</span>
+        </div>
+        <div class="draft-toolbar"><span>Unreliable connection? Save an encrypted draft on this device.</span>
+          <div><button type="button" class="btn btn-outline" id="saveDraft">Save encrypted draft</button>
+          <button type="button" class="btn btn-outline" id="loadDraft">Restore draft</button>
+          <button type="button" class="btn btn-outline" id="clearDraft">Delete draft</button></div>
+        </div>
+        <form id="nestForm" class="quick-mode">
+          <div class="admin-field-heading">Public record — only shown after approval</div>
+          <div class="form-grid">
+            <label>Public nest ID *<input name="id" required maxlength="40" placeholder="PM-2026-001" pattern="[A-Za-z0-9_-]+"></label>
+            <label>Season year (from relocation date) *<input name="season" type="number" required min="2000" max="2100" readonly title="Automatically derived from the relocation date"></label>
+            <label>Species *<select name="species" required><option value="Green turtle">Green turtle</option><option value="Hawksbill turtle">Hawksbill turtle</option><option value="Olive ridley turtle">Olive ridley turtle</option><option value="Other / unconfirmed">Other / unconfirmed</option></select></label>
+            <label class="detail-only">Nest status *<select name="status" required><option value="incubating">Incubating</option><option value="excavated">Excavated</option><option value="emerged">Emerged</option></select></label>
+            <label class="detail-only">Date laid<input name="date_laid" type="date"></label>
+            <label>Relocation date *<input name="date_relocated" type="date" required></label>
+
+            <label>Island sector where nest was found<input name="island_sector_found" list="nestSectors" maxlength="100" placeholder="e.g. A2, B3, C1 (no GPS)"></label>
+            <datalist id="nestSectors"><option value="A1"><option value="A2"><option value="A3"><option value="B1"><option value="B2"><option value="B3"><option value="C1"><option value="C2"><option value="C3"><option value="D1"><option value="D2"><option value="D3"><option value="E"><option value="F1"><option value="F2"><option value="F3"><option value="G1"><option value="G2"></datalist>
+            <label class="detail-only">Public warden name<input name="warden_public_name" maxlength="100" placeholder="Only with consent"></label>
+            <label class="detail-only">Expected emergence from<input name="expected_start" type="date"></label>
+            <label class="detail-only">Expected emergence to<input name="expected_end" type="date"></label>
+            <label class="detail-only">Observed hatch date<input name="hatch_date" type="date"></label>
+            <label class="detail-only">First observed emergence<input name="emergence_date" type="date"></label>
+            <label class="detail-only">Excavation / assessment date<input name="excavation_date" type="date"></label>
+            <label class="detail-only">Confirmed hatched eggs<input name="hatched_eggs" type="number" min="0" step="1" placeholder="Only after nest assessment"></label>
+            <label class="detail-only">Confirmed emerged hatchlings<input name="emerged_hatchlings" type="number" min="0" step="1" placeholder="If verified separately"></label>
+            <label class="detail-only">Released hatchlings (calculated)<input name="released_hatchlings" type="number" min="0" step="1" placeholder="Enter healthy + deformed below" readonly></label>
+          </div>
+          <fieldset class="egg-entry-fieldset" aria-describedby="relocationEggHelp">
+            <legend>Eggs recorded at relocation</legend>
+            <p class="field-note" id="relocationEggHelp">Record three distinct egg categories from the TRACC datasheet. Only <strong>Eggs relocated</strong> will be shown to visitors after approval. Broken and deformed egg counts are staff-only. Blank means not yet recorded; zero means confirmed none.</p>
+            <div class="egg-entry-grid">
+              <label class="egg-count-tile egg-relocated"><span class="egg-tile-number">01 · PUBLIC AFTER APPROVAL</span><span class="egg-tile-name">Eggs relocated *</span><input name="egg_count" type="number" inputmode="numeric" min="1" step="1" required placeholder="e.g. 92"><small>Eggs transferred to the hatchery</small></label>
+              <label class="egg-count-tile"><span class="egg-tile-number">02 · STAFF ONLY</span><span class="egg-tile-name">Broken eggs</span><input name="broken_eggs" type="number" inputmode="numeric" min="0" step="1" placeholder="e.g. 0"><small>Recorded during relocation</small></label>
+              <label class="egg-count-tile"><span class="egg-tile-number">03 · STAFF ONLY</span><span class="egg-tile-name">Deformed eggs</span><input name="deformed_eggs" type="number" inputmode="numeric" min="0" step="1" placeholder="e.g. 0"><small>Recorded during relocation</small></label>
+            </div>
+          </fieldset>
+          <label class="detail-only">Public monitoring update<textarea name="notes_public" rows="3" maxlength="800" placeholder="Visitor-friendly update, without identifying coordinates or sensitive details."></textarea></label>
+          <fieldset class="release-fieldset detail-only"><legend>Hatchling release outcome</legend><p class="field-note">Both healthy and deformed hatchlings count as released. Enter each category (use 0 for confirmed none); the published total is calculated as their sum. If either category is unknown, release count stays unreported.</p><div class="form-grid"><label>Healthy hatchlings released<input name="healthy_hatchlings" type="number" min="0" step="1" placeholder="Count, or blank if unknown"></label><label>Deformed hatchlings released<input name="deformed_hatchlings" type="number" min="0" step="1" placeholder="Count, or blank if unknown"></label></div></fieldset>
+          <fieldset class="mother-fieldset detail-only"><legend>Optional mother turtle information · public after approval</legend><p class="field-note">Mother details appear publicly only when at least one tag number is entered. Please confirm the tag and any published measurements are approved for sharing.</p><div class="form-grid"><label>Mother's left flipper tag<input name="tag_left" maxlength="60" placeholder="Original sheet: Tag Left"></label><label>Mother's right flipper tag<input name="tag_right" maxlength="60" placeholder="Original sheet: Tag Right"></label><label>Mother CCL (cm)<input name="ccl" inputmode="decimal" maxlength="30" placeholder="Curved carapace length"></label><label>Mother CCW (cm)<input name="ccw" inputmode="decimal" maxlength="30" placeholder="Curved carapace width"></label></div><label class="mother-share-control"><input id="shareMotherDetails" type="checkbox"> Share this tagged mother's information on the public nest page after approval</label><p class="field-note">If not selected, tags and measurements remain staff-only. Publishing requires at least one tag number.</p><label>Mother turtle note (only if shared)<textarea name="mother_note_public" rows="2" maxlength="400" placeholder="Optional visitor-facing note"></textarea></label></fieldset>
+          <fieldset class="metadata-fieldset detail-only"><div class="metadata-head"><span class="metadata-title">Custom nest metadata</span><button type="button" id="addMetadata" class="btn btn-outline">+ Add field</button></div><p class="field-note">Add, edit, or remove optional metadata for this nest. Each field has a label, value and visibility. Public fields appear only after administrator approval; protected fields remain staff-only. Never put GPS coordinates or sensitive information in a public field.</p><div id="metadataRows" class="metadata-rows"></div></fieldset>
+          <details class="private-details detail-only"><summary>Protected research and nest-sheet fields (staff only)</summary>
+            <p>These fields follow the attached datasheet and are saved separately from the public website. Reviewers can inspect them, but anonymous visitors cannot retrieve them.</p>
+            <div class="form-grid">
+              <label>Original nest code<input name="nest_code" maxlength="70" placeholder="e.g. F6"></label>
+              <label>Beach / location<input name="nest_location" maxlength="150"></label>
+              <label>Detailed sector code (staff only)<input name="sector" maxlength="60"></label>
+              <label>Hatchery position<input name="hatchery_position" maxlength="70"></label>
+              <label>Relocation by — nest<input name="relocated_by_nest" maxlength="100"></label>
+              <label>Relocation by — hatchery<input name="relocated_by_hatchery" maxlength="100"></label>
+              <label>Undeveloped / unfertilized eggs<input name="undeveloped_eggs" type="number" min="0" step="1"></label>
+              <label>Dead egg — stage 1<input name="dead_egg_stage1" type="number" min="0" step="1"></label>
+              <label>Dead egg — stage 2<input name="dead_egg_stage2" type="number" min="0" step="1"></label>
+              <label>Dead egg — stage 3<input name="dead_egg_stage3" type="number" min="0" step="1"></label>
+              <label>Attacked eggs<input name="attacked_eggs" type="number" min="0" step="1"></label>
+              <label>Dead hatchlings<input name="dead_hatchlings" type="number" min="0" step="1"></label>
+              <label>Total excavated<input name="total_excavated" type="number" min="0" step="1"></label>
+              <label>Excavation difference<input name="excavation_difference" type="number" step="1"></label>
+              <label>Hatching method<input name="hatching_method" maxlength="70"></label>
+              <label>Hatching time (as recorded)<input name="hatching_time" maxlength="70"></label>
+              <label>Temperature logger ID<input name="logger_id" maxlength="100"></label>
+              <label>Turtle present?<select name="turtle_present"><option value="">Not recorded</option><option value="Yes">Yes</option><option value="No">No</option><option value="Unconfirmed">Unconfirmed</option></select></label>
+            </div>
+            <label>Internal research notes<textarea name="private_notes" rows="3" maxlength="4000" placeholder="Private: field irregularities, observations, assessment comments."></textarea></label>
+          </details>
+          <div class="form-actions"><button class="btn btn-dark" type="submit" id="saveButton">Submit for administrator review</button><button class="btn btn-outline" type="button" id="resetButton">Clear</button></div>
+        </form>
+
+        <form id="milestoneForm" hidden>
+          <div class="milestone-intro"><span class="small-label">FIELD FOLLOW-UP</span>
+            <h3 id="milestoneNestTitle">Selected nest</h3><p id="milestoneContext">Approved relocation details cannot be edited here. Only the observation below will be submitted for review.</p></div>
+          <div class="form-grid">
+            <label>Observation type <select name="status" required><option value="incubating">Incubation monitoring</option><option value="emerged">Emergence / release</option><option value="excavated">Excavation</option></select></label>
+            <label>Observed hatch date <input type="date" name="hatch_date"></label>
+            <label>First emergence date <input type="date" name="emergence_date"></label>
+            <label>Excavation date <input type="date" name="excavation_date"></label>
+            <label>Healthy hatchlings released <input name="healthy_hatchlings" inputmode="numeric" type="number" min="0" step="1" placeholder="Enter 0 if none"></label>
+            <label>Deformed hatchlings released <input name="deformed_hatchlings" inputmode="numeric" type="number" min="0" step="1" placeholder="Enter 0 if none"></label>
+            <label>Confirmed hatched eggs <input name="hatched_eggs" inputmode="numeric" type="number" min="0" step="1"></label>
+            <label>Confirmed emerged hatchlings <input name="emerged_hatchlings" inputmode="numeric" type="number" min="0" step="1"></label>
+          </div>
+          <label>Visitor-friendly milestone update <textarea name="notes_public" maxlength="800" rows="3" placeholder="What happened? Avoid precise locations and unapproved turtle tags."></textarea></label>
+          <details><summary>Additional protected excavation / research details (staff-only; relocation egg counts remain unchanged)</summary>
+            <div class="form-grid">
+              <label>Undeveloped eggs <input name="undeveloped_eggs" type="number" min="0" step="1"></label>
+              <label>Dead egg stage 1 <input name="dead_egg_stage1" type="number" min="0" step="1"></label>
+              <label>Dead egg stage 2 <input name="dead_egg_stage2" type="number" min="0" step="1"></label>
+              <label>Dead egg stage 3 <input name="dead_egg_stage3" type="number" min="0" step="1"></label>
+              <label>Attacked eggs <input name="attacked_eggs" type="number" min="0" step="1"></label>
+              <label>Dead hatchlings <input name="dead_hatchlings" type="number" min="0" step="1"></label>
+              <label>Total excavated <input name="total_excavated" type="number" min="0" step="1"></label>
+              <label>Hatching method <input name="hatching_method" maxlength="70"></label>
+              <label>Hatching time <input name="hatching_time" maxlength="70"></label>
+            </div>
+            <label>Protected research notes <textarea name="private_notes" maxlength="4000" rows="2"></textarea></label>
+          </details>
+          <div class="form-actions"><button class="btn btn-dark" type="submit" id="submitMilestone">Submit milestone for approval</button>
+          <button class="btn btn-outline" type="button" id="cancelMilestone">Back to new nest</button></div>
+        </form>
+      </section>
+    </div>
+    <section class="export-panel" id="exportSection"><div class="panel-heading"><div><h2>Export hatchery records</h2><p class="staff-helper">Download an Excel workbook for reporting or internal analysis. Export permissions follow your staff role.</p></div><span class="field-tag">.xlsx</span></div>
+      <div class="export-grid"><label>Records to export<select id="exportScope"><option value="all">All approved nests</option><option value="year">Approved nests by season</option><option value="species">Approved nests by species</option><option value="nest">One approved nest</option><option value="submissions">All review submissions (admin only)</option></select></label>
+      <label id="exportYearWrap" hidden>Calendar year<select id="exportYear"></select></label>
+      <label id="exportSpeciesWrap" hidden>Species<select id="exportSpecies"></select></label>
+      <label id="exportNestWrap" hidden>Nest<select id="exportNest"></select></label></div>
+      <label class="export-private-control"><input id="exportPrivate" type="checkbox"> Include protected research fields (administrator only)</label>
+      <p class="staff-helper export-warning">Exports containing protected fields or unapproved submissions must be stored in TRACC-controlled storage. Do not upload these workbooks to a public GitHub repository.</p>
+      <button id="exportExcel" type="button" class="btn btn-dark">Download Excel workbook ↓</button>
+    </section>
+    <section class="review-panel" id="reviewSection">
+      <div class="panel-heading"><h2>Review queue</h2><span class="review-count" id="reviewCount">0 pending</span></div>
+      <p id="reviewHelp" class="staff-helper">Pending requests require an administrator. Submitting a proposal never updates the public website directly.</p>
+      <div id="reviewList"></div>
+    </section>
+    <section class="review-panel" id="auditSection" hidden>
+      <div class="panel-heading"><h2>Approved change history</h2><span class="field-tag">ADMIN ONLY</span></div>
+      <p class="staff-helper">Immutable review snapshots show what changed, who approved it, and when. Full history and research data remain private.</p>
+      <div id="auditList"></div>
+    </section>
+  </section>
+</main>
+<footer class="admin-footer container">TRACC Hatchery Portal · Staff data is private. Retain original field records and maintain backups.</footer>
+</body>
+</html>

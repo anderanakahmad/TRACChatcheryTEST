@@ -1,0 +1,15 @@
+# Private fieldwork data / reports must never be committed to the public site.
+*.xlsx
+*.xls
+*.csv
+*.sql.dump
+*.backup
+*Datasheet*
+*datasheet*
+*private-export*
+*-private.json
+staff_exports/
+private/
+.env
+.env.*
+.DS_Store

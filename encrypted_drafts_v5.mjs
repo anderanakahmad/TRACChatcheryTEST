@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+const store=new Map();globalThis.localStorage={getItem:k=>store.get(k)??null,setItem:(k,v)=>store.set(k,v),removeItem:k=>store.delete(k)};
+const {saveEncryptedDraft,readEncryptedDraft,hasEncryptedDraft,clearEncryptedDraft}=await import('../assets/encrypted-drafts.js');
+const draft={mode:'nest',values:{id:'PM-2026-500',private_notes:'internal observation'}};
+await saveEncryptedDraft(draft,'this-is-a-long-field-passphrase','staff-uuid-test');
+assert.equal(hasEncryptedDraft(),true);
+assert.ok(!JSON.stringify([...store.values()]).includes('internal observation'));
+const restored=await readEncryptedDraft('this-is-a-long-field-passphrase','staff-uuid-test');
+assert.deepEqual(restored,draft);
+await assert.rejects(readEncryptedDraft('incorrect-passphrase','staff-uuid-test'));
+await assert.rejects(readEncryptedDraft('this-is-a-long-field-passphrase','other-warden'),/different staff/);
+clearEncryptedDraft();assert.equal(hasEncryptedDraft(),false);
+console.log('V5 device-only AES-GCM encrypted draft roundtrip and wrong account/passphrase: PASS');

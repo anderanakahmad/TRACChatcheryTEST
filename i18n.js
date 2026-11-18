@@ -1,0 +1,43 @@
+/** Bilingual visitor text. Scientific names, measurements and source-record values stay unchanged. */
+const en={
+ impact:'Hatchery impact',explore:'Explore nests',ourWork:'Our work',how:'How it works',staff:'Staff portal',
+ heroPara:'Every protected nest brings us one step closer to a future where sea turtles thrive. Follow their journey from relocation to emergence, with updates from our hatchery team.',
+ heroExplore:'Explore our nests',heroRead:'How to read a nest record',allSeasons:'All seasons',allSpecies:'All species',
+ searchPlaceholder:'Search nest ID or warden…',clear:'Clear filters',sortBy:'Sort by',latest:'Latest relocated',soon:'Emerging soon',
+ grid:'Grid',list:'List',followedOnly:'Show followed nests only',nestsRelocated:'Nests relocated',eggsRelocated:'Eggs relocated',hatchlingsReleased:'Hatchlings released',nestsIncubating:'Nests under monitoring',
+ incubating:'Incubating',emergence_soon:'Emergence Soon',awaiting_update:'Awaiting update',emergenceEstimate:'Within the estimated 50–60 day emergence window',awaitingObservation:'Estimated window passed · awaiting confirmed observation',sinceRelocation:'since relocation',emerged:'Emerged',excavated:'Excavated',viewJourney:'View nest journey',season:'Season',
+ relocatedOn:'Relocated on',observedMilestone:'Observed milestone',incubationEstimate:'Incubation estimate not available yet',
+ day:'Day',incubation:'of incubation',estimatedTime:'of estimated time',foundNests:'nests found',foundNest:'nest found',
+ follow:'☆ Follow this nest',following:'★ Following this nest',downloadQr:'Download QR',qrTitle:'Public nest QR code',copyLink:'Copy nest link',linkCopied:'Link copied!',
+ nestId:'Nest ID',species:'Species',responsible:'Responsible warden',dateLaid:'Date laid',dateRelocated:'Date relocated',
+ sectorFound:'Island sector found',expected:'Expected emergence (estimated)',firstEmergence:'Recorded first emergence',hatchDate:'Recorded hatch date',excavationDate:'Nest excavation date',
+ hatchingOutcomes:'Hatching outcomes',hatchingSuccess:'Hatching success · after assessment',emergenceSuccess:'Emergence success · after assessment',hatchedEggs:'Hatched eggs (confirmed)',
+ pending:'Pending',identifiedMother:'Identified nesting mother',leftTag:'Left flipper tag',rightTag:'Right flipper tag',ccl:'Curved carapace length',ccw:'Curved carapace width',
+ more:'More about this nest',wardenUpdate:"Warden's update",lastUpdated:'Last updated',notRecorded:'Not recorded',notPublished:'Not published',
+ browseNests:'Browse nests',noNests:'No matching nests found',reset:'Reset filters',estimatedWarning:'This bar tracks calendar time toward the estimated emergence date, not embryo development.',
+ mappedSector:'See this island sector on the map',preview:'Preview only · All nest records are fictional examples',
+ simpleStatus:'Status comes from observations approved by the hatchery team.',
+ heroKicker:'POM POM ISLAND · SABAH, MALAYSIA',
+};
+const ms={
+ impact:'Impak pusat penetasan',explore:'Terokai sarang',ourWork:'Usaha kami',how:'Cara ia berfungsi',staff:'Portal kakitangan',
+ heroPara:'Setiap sarang yang dilindungi membawa kita lebih dekat kepada masa depan penyu yang lebih baik. Ikuti perjalanan sarang daripada pemindahan sehingga anak penyu muncul, berdasarkan kemas kini pasukan pusat penetasan.',
+ heroExplore:'Terokai sarang kami',heroRead:'Cara membaca rekod sarang',allSeasons:'Semua musim',allSpecies:'Semua spesies',
+ searchPlaceholder:'Cari ID sarang atau nama warden…',clear:'Kosongkan penapis',sortBy:'Susun ikut',latest:'Terbaharu dipindahkan',soon:'Dijangka menetas',
+ grid:'Grid',list:'Senarai',followedOnly:'Paparkan sarang diikuti sahaja',nestsRelocated:'Sarang dipindahkan',eggsRelocated:'Telur dipindahkan',hatchlingsReleased:'Anak penyu dilepaskan',nestsIncubating:'Sarang dipantau',
+ incubating:'Dalam pengeraman',emergence_soon:'Hampir muncul',awaiting_update:'Menunggu kemas kini',emergenceEstimate:'Dalam anggaran tempoh kemunculan hari 50–60',awaitingObservation:'Tempoh anggaran berlalu · menunggu pemerhatian disahkan',sinceRelocation:'sejak pemindahan',emerged:'Anak penyu muncul',excavated:'Sarang digali',viewJourney:'Lihat perjalanan sarang',season:'Musim',
+ relocatedOn:'Tarikh pemindahan',observedMilestone:'Pencapaian direkodkan',incubationEstimate:'Anggaran tempoh pengeraman belum tersedia',
+ day:'Hari',incubation:'pengeraman',estimatedTime:'daripada anggaran tempoh',foundNests:'sarang ditemui',foundNest:'sarang ditemui',
+ follow:'☆ Ikuti sarang ini',following:'★ Mengikuti sarang ini',downloadQr:'Muat turun QR',qrTitle:'Kod QR sarang awam',copyLink:'Salin pautan',linkCopied:'Pautan disalin!',
+ nestId:'ID sarang',species:'Spesies',responsible:'Warden bertanggungjawab',dateLaid:'Tarikh bertelur',dateRelocated:'Tarikh dipindahkan',
+ sectorFound:'Sektor pulau dijumpai',expected:'Jangkaan kemunculan (anggaran)',firstEmergence:'Kemunculan pertama direkodkan',hatchDate:'Tarikh penetasan direkodkan',excavationDate:'Tarikh penggalian sarang',
+ hatchingOutcomes:'Hasil penetasan',hatchingSuccess:'Kejayaan penetasan · selepas pemeriksaan',emergenceSuccess:'Kejayaan kemunculan · selepas pemeriksaan',hatchedEggs:'Telur menetas (disahkan)',
+ pending:'Belum direkodkan',identifiedMother:'Induk penyu dikenal pasti',leftTag:'Tag sirip kiri',rightTag:'Tag sirip kanan',ccl:'Panjang lengkung karapas',ccw:'Lebar lengkung karapas',
+ more:'Maklumat lanjut sarang',wardenUpdate:'Kemas kini warden',lastUpdated:'Kali terakhir dikemas kini',notRecorded:'Tidak direkodkan',notPublished:'Tidak dikongsikan',
+ browseNests:'Lihat sarang',noNests:'Tiada sarang yang sepadan',reset:'Tetapkan semula penapis',estimatedWarning:'Bar ini menunjukkan masa kalendar menuju tarikh jangkaan kemunculan, bukan perkembangan embrio.',
+ mappedSector:'Lihat sektor pulau ini pada peta',preview:'Pratonton · Semua rekod sarang hanyalah contoh rekaan',
+ simpleStatus:'Status berdasarkan pemerhatian yang diluluskan oleh pasukan pusat penetasan.',
+ heroKicker:'PULAU POM POM · SABAH, MALAYSIA',
+};
+export const dictionaries={en,ms};
+export function translate(language,key){return (language==='ms'?ms:en)[key]||en[key]||key;}

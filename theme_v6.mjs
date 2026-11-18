@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+const memory=new Map();
+const prefs={matches:true};
+globalThis.localStorage={getItem:key=>memory.get(key)||null,setItem:(key,value)=>memory.set(key,value)};
+globalThis.matchMedia=()=>prefs;
+const mkNode=()=>({value:'',textContent:'',attributes:{},setAttribute(key,value){this.attributes[key]=value;}});
+const icon=mkNode(),label=mkNode(),meta=mkNode(),listeners={};
+const button={attributes:{},setAttribute(key,value){this.attributes[key]=value;},querySelector(sel){return sel==='.theme-switch-icon'?icon:label;},addEventListener(event,fn){listeners[event]=fn;}};
+const root={dataset:{}};
+globalThis.document={documentElement:root,getElementById:id=>id==='themeSwitch'?button:null,querySelector:()=>meta};
+const {initThemeToggle,themePreference}=await import('../assets/theme.js');
+assert.equal(themePreference(),'dark','respect OS choice when unset');
+root.dataset.theme='dark';initThemeToggle();
+assert.equal(label.textContent,'Light');assert.equal(button.attributes['aria-pressed'],'true');
+listeners.click();assert.equal(root.dataset.theme,'light');assert.equal(memory.get('tracc_theme'),'light');assert.equal(button.attributes['aria-label'],'Switch to dark mode');
+listeners.click();assert.equal(root.dataset.theme,'dark');assert.equal(memory.get('tracc_theme'),'dark');
+assert.equal(themePreference(),'dark');
+console.log('V6 light/dark controls + aria attributes + shared preference persistence: PASS');
