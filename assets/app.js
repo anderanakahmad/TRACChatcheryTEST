@@ -258,7 +258,9 @@ function renderActivity() {
     }
   }
   events.sort((a,b)=>b.date.localeCompare(a.date) || a.id.localeCompare(b.id));
-  $('activityFeed').innerHTML = events.length ? events.slice(0,4).map(e => `<button class="activity-item" type="button" data-activity-nest="${safe(e.id)}"><span class="activity-date">${dateText(e.date)}</span><strong>${safe(e.label)}</strong><span>${safe(e.id)} · ${safe(e.species)}</span><span class="activity-arrow" aria-hidden="true">↗</span></button>`).join('') : '<p class="activity-empty">No dated milestones have been published yet.</p>';
+  const activityHost = $('activityFeed');
+  if (!activityHost) return;
+  activityHost.innerHTML = events.length ? events.slice(0,4).map(e => `<button class="activity-item" type="button" data-activity-nest="${safe(e.id)}"><span class="activity-date">${dateText(e.date)}</span><strong>${safe(e.label)}</strong><span>${safe(e.id)} · ${safe(e.species)}</span><span class="activity-arrow" aria-hidden="true">↗</span></button>`).join('') : '<p class="activity-empty">No dated milestones have been published yet.</p>';
 }
 function showSector(sector){
   const code=String(sector||'').trim().toUpperCase();
@@ -290,7 +292,7 @@ async function start() {
   for (const id of ['nestSearch','seasonFilter','statusFilter','speciesFilter','sortNests']) $(id).addEventListener(id==='nestSearch'?'input':'change',renderGrid);
   for (const id of ['statSeasonFilter','statSpeciesFilter']) $(id).addEventListener('change',renderStats);
   $('clearFilters').addEventListener('click',resetFilters);$('emptyClear').addEventListener('click',resetFilters);
-  $('activityFeed').addEventListener('click',event=>{const button=event.target.closest('[data-activity-nest]');if(!button)return;const nest=allNests.find(n=>n.id===button.dataset.activityNest);if(nest)showNest(nest);});
+  $('activityFeed')?.addEventListener('click',event=>{const button=event.target.closest('[data-activity-nest]');if(!button)return;const nest=allNests.find(n=>n.id===button.dataset.activityNest);if(nest)showNest(nest);});
   $('dialogContent').addEventListener('click',event=>{const link=event.target.closest('[data-jump-sector]');if(!link)return;event.preventDefault();closeNest();showSector(link.dataset.jumpSector);});
   $('gridView').addEventListener('click',()=>setView('grid'));
   $('listView').addEventListener('click',()=>setView('list'));
@@ -311,4 +313,10 @@ async function start() {
     output('dataLabel','Hatchery records temporarily unavailable');
   }
 }
-start();
+start().catch(error => {
+  console.error('Portal initialization failed:', error);
+  const label = document.getElementById('resultCount');
+  if (label) label.textContent = 'Unable to initialize nest records';
+  const warning = document.getElementById('loadError');
+  if (warning) warning.hidden = false;
+});
