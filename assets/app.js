@@ -146,7 +146,6 @@ function renderStats() {
   output('statReleased',totals.released===null?'—':numberText(totals.released));
   output('statActive',numberText(totals.active));
   output('statFootnote',`Showing ${numberText(visible.length)} administrator-approved nest records. Release counts are recorded for ${numberText(totals.releaseKnown)} of these nests; missing counts are not assumed to be zero.`);
-  breakdownTable('seasonBreakdown',visible,'season');
   breakdownTable('speciesBreakdown',visible,'species');
   renderTrend(visible, season, species);
   output('dataLabel',isDemo()?tr('preview'):`Hatchery records · ${isLive()?'APPROVED LIVE RECORDS':'APPROVED STATIC RECORDS'}`);
