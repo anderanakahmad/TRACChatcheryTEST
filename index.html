@@ -11,19 +11,19 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="./assets/theme-boot.js"></script>
-  <link rel="stylesheet" href="./assets/styles.css">
-  <script type="module" src="./assets/app.js"></script>
+  <link rel="stylesheet" href="./assets/styles.css?v=8-bm">
+  <script type="module" src="./assets/app.js?v=8-bm"></script>
 </head>
 <body>
-  <div class="test-mode-strip" role="status"><strong>FIELD-TEST DEMO · FICTIONAL DATA ONLY</strong><span>New nest submissions require administrator approval. Demo changes stay on the same browser; phones do not sync.</span><a href="./testing.html">How testing works</a></div>
-  <div class="announcement" id="demoBanner" hidden>DEMONSTRATION PORTAL · The nest records below are fictional examples, not TRACC monitoring data.</div>
+  <div class="test-mode-strip" role="status"><strong data-i18n="testTitle">FIELD-TEST DEMO · FICTIONAL DATA ONLY</strong><span data-i18n="testDescription">New nest submissions require administrator approval. Demo changes stay on the same browser; phones do not sync.</span><a href="./testing.html" data-i18n="testingGuide">How testing works</a></div>
+  <div class="announcement" id="demoBanner" hidden data-i18n="demoNotice">DEMONSTRATION PORTAL · The nest records below are fictional examples, not TRACC monitoring data.</div>
   <header class="site-header">
     <div class="container nav-inner">
-      <a id="brandLogoLink" href="https://tracc.org/" class="brand" target="_blank" rel="noopener noreferrer" aria-label="Visit the official TRACC website">
-        <span class="brand-logo-wrap"><img class="brand-logo" src="./assets/tracc-wordmark.webp" alt="TRACC logo"></span>
-        <span><span class="brand-name sr-only">TRACC</span><span class="brand-caption">SEA TURTLE HATCHERY</span></span>
+      <a id="brandLogoLink" href="https://tracc.org/" class="brand" target="_blank" rel="noopener noreferrer" aria-label="Visit the official TRACC website" data-i18n-aria-label="officialSite">
+        <span class="brand-logo-wrap"><img class="brand-logo" src="./assets/tracc-wordmark.webp" alt="TRACC logo" data-i18n-alt="logoAlt"></span>
+        <span><span class="brand-name sr-only">TRACC</span><span class="brand-caption" data-i18n="brandCaption">SEA TURTLE HATCHERY</span></span>
       </a>
-      <nav class="nav-links" aria-label="Main navigation">
+      <nav class="nav-links" aria-label="Main navigation" data-i18n-aria-label="mainNav">
         <a href="#impact" data-i18n="impact">Hatchery impact</a>
         <a href="#nests" data-i18n="explore">Explore nests</a>
         <a href="#our-work" data-i18n="ourWork">Our work</a>
@@ -37,10 +37,10 @@
       <div class="container hero-grid">
         <div class="hero-copy">
           <div class="eyebrow"><span class="eyebrow-line"></span> <span data-i18n="heroKicker">POM POM ISLAND · SABAH, MALAYSIA</span></div>
-          <h1 id="heroTitle">Small beginnings.<br><em>Ocean-sized</em> hope.</h1>
+          <h1 id="heroTitle"><span data-i18n="heroHeading1">Small beginnings.</span><em data-i18n="heroHeading2">Ocean-sized hope.</em></h1>
           <p data-i18n="heroPara">Every protected nest brings us one step closer to a future where sea turtles thrive. Follow their journey from relocation to emergence, with updates from our hatchery team.</p>
           <div class="hero-buttons"><a class="btn btn-coral" href="#nests"><span data-i18n="heroExplore">Explore our nests</span> <span aria-hidden="true">↗</span></a><a class="text-link" href="#how-it-works"><span data-i18n="heroRead">How to read a nest record</span> <span aria-hidden="true">↗</span></a></div>
-          <div class="hero-footer"><span class="live-pip"></span><span id="dataLabel">Loading hatchery records…</span></div>
+          <div class="hero-footer"><span class="live-pip"></span><span id="dataLabel" data-i18n="loading">Loading hatchery records…</span></div>
         </div>
         <div class="hero-visual" aria-hidden="true">
           <div class="hero-orbit orbit-1"></div><div class="hero-orbit orbit-2"></div>
@@ -59,7 +59,7 @@
             <path d="M211 208L166 220L170 279L211 266M321 205L353 218L359 276L323 266M211 266L170 279L195 342L250 326L269 297M323 266L359 276L342 340L289 325L269 297M195 342L217 390L265 403L250 326M289 325L265 403L316 384L342 340" stroke="#B4D7AC" stroke-width="6"/>
             <path d="M250 326L269 297L289 325L265 403Z" fill="#76AA82"/><path d="M212 208L269 169L321 205" stroke="#BEDDB3" stroke-width="5"/>
           </svg></div>
-          <div class="hero-tag"><span class="tag-icon">✦</span><span>One nest at a time.<br><strong>A future worth protecting.</strong></span></div>
+          <div class="hero-tag"><span class="tag-icon">✦</span><span><span data-i18n="heroTag1">One nest at a time.</span><br><strong data-i18n="heroTag2">A future worth protecting.</strong></span></div>
         </div>
       </div>
       <div class="hero-curve"></div>
@@ -68,11 +68,11 @@
 <section class="stats-section" id="impact" aria-labelledby="statsTitle">
       <div class="container">
         <div class="stats-header">
-          <div><span class="small-label">TRACC / HATCHERY IMPACT</span><h2 id="statsTitle">Every nest <em>counts.</em></h2>
-            <p>Explore the outcomes of our hatchery effort, from eggs relocated to hatchlings safely released.</p></div>
+          <div><span class="small-label" data-i18n="impactKicker">TRACC / HATCHERY IMPACT</span><h2 id="statsTitle"><span data-i18n="impactHeading1">Every nest</span> <em data-i18n="impactHeading2">counts.</em></h2>
+            <p data-i18n="impactDescription">Explore the outcomes of our hatchery effort, from eggs relocated to hatchlings safely released.</p></div>
           <div class="stats-controls">
-            <label for="statSeasonFilter">Season<select id="statSeasonFilter"><option value="" data-i18n="allSeasons">All seasons</option></select></label>
-            <label for="statSpeciesFilter">Species<select id="statSpeciesFilter"><option value="" data-i18n="allSpecies">All species</option></select></label>
+            <label for="statSeasonFilter"><span data-i18n="season">Season</span><select id="statSeasonFilter"><option value="" data-i18n="allSeasons">All seasons</option></select></label>
+            <label for="statSpeciesFilter"><span data-i18n="species">Species</span><select id="statSpeciesFilter"><option value="" data-i18n="allSpecies">All species</option></select></label>
           </div>
         </div>
         <div class="stats-overview">
@@ -83,87 +83,87 @@
               <div class="stat"><div class="stat-icon">✳</div><div class="stat-value" id="statReleased">—</div><div class="stat-label" data-i18n="hatchlingsReleased">Hatchlings released</div></div>
               <div class="stat"><div class="stat-icon">◔</div><div class="stat-value" id="statActive">—</div><div class="stat-label" data-i18n="nestsIncubating">Nests under monitoring</div></div>
             </div>
-            <p class="stat-footnote" id="statFootnote">Figures are calculated from administrator-approved published records only.</p>
-            <section class="impact-table-card" aria-labelledby="speciesBreakdownTitle"><div class="impact-table-head"><h3 id="speciesBreakdownTitle">By species</h3><span>Selected season and species</span></div>
-              <div class="impact-table-scroll"><table><thead><tr><th scope="col">Species</th><th scope="col">Nests</th><th scope="col">Eggs</th><th scope="col">Released*</th></tr></thead><tbody id="speciesBreakdown"></tbody></table></div></section>
+            <p class="stat-footnote" id="statFootnote" data-i18n="statsInitial">Figures are calculated from administrator-approved published records only.</p>
+            <section class="impact-table-card" aria-labelledby="speciesBreakdownTitle"><div class="impact-table-head"><h3 id="speciesBreakdownTitle" data-i18n="bySpecies">By species</h3><span data-i18n="selectedScope">Selected season and species</span></div>
+              <div class="impact-table-scroll"><table><thead><tr><th scope="col" data-i18n="species">Species</th><th scope="col" data-i18n="nests">Nests</th><th scope="col" data-i18n="eggs">Eggs</th><th scope="col" data-i18n="releasedShort">Released*</th></tr></thead><tbody id="speciesBreakdown"></tbody></table></div></section>
           </div>
           <section class="impact-chart-card" aria-labelledby="trendTitle">
-            <div class="impact-chart-head"><div><span class="small-label">RELOCATION TRENDS</span><h3 id="trendTitle">Nests relocated by year</h3><p id="trendSubtitle">Approved records across all nesting years</p></div><span class="chart-icon" aria-hidden="true">⌁</span></div>
-            <div class="trend-svg-wrap" id="trendChart" role="img" aria-label="Nest relocation trend chart"></div>
-            <p class="chart-note" id="trendNote">Select a season for monthly nest counts, or choose all seasons for yearly counts.</p>
+            <div class="impact-chart-head"><div><span class="small-label" data-i18n="trendKicker">RELOCATION TRENDS</span><h3 id="trendTitle" data-i18n="trendYear">Nests relocated by year</h3><p id="trendSubtitle" data-i18n="trendInitial">Approved records across all nesting years</p></div><span class="chart-icon" aria-hidden="true">⌁</span></div>
+            <div class="trend-svg-wrap" id="trendChart" role="img" aria-label="Nest relocation trend chart" data-i18n-aria-label="trendAria"></div>
+            <p class="chart-note" id="trendNote" data-i18n="trendChoose">Select a season for monthly nest counts, or choose all seasons for yearly counts.</p>
           </section>
         </div>
-        <p class="impact-method">*Hatchlings released include healthy and deformed hatchlings released before excavation, plus live hatchlings recovered and released during excavation, when documented and reviewed. Missing counts are not treated as zero. Season = calendar year of nest relocation; only approved records appear in these statistics.</p>
+        <p class="impact-method" data-i18n="impactMethod">*Hatchlings released include healthy and deformed hatchlings released before excavation, plus live hatchlings recovered and released during excavation, when documented and reviewed. Missing counts are not treated as zero. Season = calendar year of nest relocation; only approved records appear in these statistics.</p>
       </div>
     </section>
 
     <section class="activity-band" aria-labelledby="activityTitle">
       <div class="container activity-inner">
         <div class="activity-heading">
-          <span class="small-label">RECENT HATCHERY MILESTONES</span>
-          <h2 id="activityTitle">The latest nest journeys.</h2>
-          <p>Recent relocation, emergence and excavation milestones from approved demonstration records.</p>
+          <span class="small-label" data-i18n="activityKicker">RECENT HATCHERY MILESTONES</span>
+          <h2 id="activityTitle" data-i18n="activityHeading">The latest nest journeys.</h2>
+          <p data-i18n="activityDescription">Recent relocation, emergence and excavation milestones from approved demonstration records.</p>
         </div>
-        <div id="activityFeed" class="activity-feed" aria-live="polite"><p class="activity-empty">Loading approved milestones…</p></div>
+        <div id="activityFeed" class="activity-feed" aria-live="polite"><p class="activity-empty" data-i18n="activityLoading">Loading approved milestones…</p></div>
       </div>
     </section>
 
     <section class="nests-section section-spacing" id="nests" aria-labelledby="nestsTitle">
       <div class="container">
-        <div class="section-topline"><span class="small-label">01 / THE HATCHERY</span><span class="section-topline-rule"></span><span class="small-label">OUR NEST RECORDS</span></div>
-        <div class="section-heading"><div><h2 id="nestsTitle">Every nest has<br><em>a story to tell.</em></h2><p>Explore our hatchery records, see how each nest is progressing, and discover the stories behind our conservation work.</p></div><div class="section-symbol" aria-hidden="true">✳</div></div>
-        <div class="filters" role="search" aria-label="Find a turtle nest">
-          <label class="search-wrap"><span class="sr-only">Search by nest ID or warden</span><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="nestSearch" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="Search nest ID or warden…" autocomplete="off"></label>
-          <label class="filter-wrap"><span class="sr-only">Filter by season</span><select id="seasonFilter"><option value="" data-i18n="allSeasons">All seasons</option></select></label>
-          <label class="filter-wrap"><span class="sr-only">Filter by status</span><select id="statusFilter"><option value="">All statuses</option><option value="incubating" data-i18n="incubating">Incubating</option><option value="emergence_soon" data-i18n="emergence_soon">Emergence Soon</option><option value="awaiting_update" data-i18n="awaiting_update">Awaiting update</option><option value="emerged" data-i18n="emerged">Emerged</option><option value="excavated" data-i18n="excavated">Excavated</option></select></label>
-          <label class="filter-wrap"><span class="sr-only">Filter by species</span><select id="speciesFilter"><option value="" data-i18n="allSpecies">All species</option></select></label>
+        <div class="section-topline"><span class="small-label" data-i18n="nestsKicker">01 / THE HATCHERY</span><span class="section-topline-rule"></span><span class="small-label" data-i18n="recordsKicker">OUR NEST RECORDS</span></div>
+        <div class="section-heading"><div><h2 id="nestsTitle"><span data-i18n="nestHeading1">Every nest has</span><em data-i18n="nestHeading2">a story to tell.</em></h2><p data-i18n="nestsDescription">Explore our hatchery records, see how each nest is progressing, and discover the stories behind our conservation work.</p></div><div class="section-symbol" aria-hidden="true">✳</div></div>
+        <div class="filters" role="search" aria-label="Find a turtle nest" data-i18n-aria-label="findNest">
+          <label class="search-wrap"><span class="sr-only" data-i18n="searchLabel">Search by nest ID or warden</span><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="nestSearch" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="Search nest ID or warden…" autocomplete="off"></label>
+          <label class="filter-wrap"><span class="sr-only" data-i18n="filterSeason">Filter by season</span><select id="seasonFilter"><option value="" data-i18n="allSeasons">All seasons</option></select></label>
+          <label class="filter-wrap"><span class="sr-only" data-i18n="filterStatus">Filter by status</span><select id="statusFilter"><option value="" data-i18n="allStatuses">All statuses</option><option value="incubating" data-i18n="incubating">Incubating</option><option value="emergence_soon" data-i18n="emergence_soon">Emergence Soon</option><option value="awaiting_update" data-i18n="awaiting_update">Awaiting update</option><option value="emerged" data-i18n="emerged">Emerged</option><option value="excavated" data-i18n="excavated">Excavated</option></select></label>
+          <label class="filter-wrap"><span class="sr-only" data-i18n="filterSpecies">Filter by species</span><select id="speciesFilter"><option value="" data-i18n="allSpecies">All species</option></select></label>
           <button class="filter-clear" id="clearFilters" type="button" data-i18n="clear">Clear filters</button>
         </div>
-        <div class="result-row"><span id="resultCount" aria-live="polite">Loading nests…</span><div class="result-tools"><label class="followed-filter"><input type="checkbox" id="followedOnly"> <span data-i18n="followedOnly">Show followed nests only</span></label><label class="nest-sort">Sort by <select id="sortNests" aria-label="Sort nests"><option value="latest">Latest relocated</option><option value="soon">Emerging soon</option></select></label><div class="view-switch" role="group" aria-label="Nest display style"><button type="button" id="gridView" aria-pressed="true" class="view-active" title="Grid layout"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.2"/><rect x="14" y="3" width="7" height="7" rx="1.2"/><rect x="3" y="14" width="7" height="7" rx="1.2"/><rect x="14" y="14" width="7" height="7" rx="1.2"/></svg><span>Grid</span></button><button type="button" id="listView" aria-pressed="false" title="List layout"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 5h12M9 12h12M9 19h12"/><rect x="3" y="4" width="3" height="3" rx=".6"/><rect x="3" y="11" width="3" height="3" rx=".6"/><rect x="3" y="18" width="3" height="3" rx=".6"/></svg><span>List</span></button></div></div></div>
+        <div class="result-row"><span id="resultCount" aria-live="polite" data-i18n="loadingNests">Loading nests…</span><div class="result-tools"><label class="followed-filter"><input type="checkbox" id="followedOnly"> <span data-i18n="followedOnly">Show followed nests only</span></label><label class="nest-sort"><span data-i18n="sortBy">Sort by</span> <select id="sortNests" aria-label="Sort nests" data-i18n-aria-label="sortNests"><option value="latest" data-i18n="latest">Latest relocated</option><option value="soon" data-i18n="soon">Emerging soon</option></select></label><div class="view-switch" role="group" aria-label="Nest display style" data-i18n-aria-label="viewStyle"><button type="button" id="gridView" aria-pressed="true" class="view-active" title="Grid layout" data-i18n-title="gridStyle"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.2"/><rect x="14" y="3" width="7" height="7" rx="1.2"/><rect x="3" y="14" width="7" height="7" rx="1.2"/><rect x="14" y="14" width="7" height="7" rx="1.2"/></svg><span data-i18n="grid">Grid</span></button><button type="button" id="listView" aria-pressed="false" title="List layout" data-i18n-title="listStyle"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 5h12M9 12h12M9 19h12"/><rect x="3" y="4" width="3" height="3" rx=".6"/><rect x="3" y="11" width="3" height="3" rx=".6"/><rect x="3" y="18" width="3" height="3" rx=".6"/></svg><span data-i18n="list">List</span></button></div></div></div>
         <div class="nest-grid" id="nestGrid" aria-live="polite"></div>
-        <div class="empty-state" id="emptyState" hidden><span class="empty-icon">◌</span><h3>No matching nests found</h3><p>Try another nest ID, season, status or species.</p><button type="button" class="btn btn-dark" id="emptyClear" data-i18n="reset">Reset filters</button></div>
-        <div class="load-error" id="loadError" hidden role="alert">Nest records could not be loaded. Please refresh this page or contact the hatchery team.</div>
+        <div class="empty-state" id="emptyState" hidden><span class="empty-icon">◌</span><h3 data-i18n="noNests">No matching nests found</h3><p data-i18n="emptyHint">Try another nest ID, season, status or species.</p><button type="button" class="btn btn-dark" id="emptyClear" data-i18n="reset">Reset filters</button></div>
+        <div class="load-error" id="loadError" hidden role="alert" data-i18n="loadError">Nest records could not be loaded. Please refresh this page or contact the hatchery team.</div>
       </div>
     </section>
 
     <section class="story-section section-spacing" id="our-work">
       <div class="container story-grid">
         <div class="story-illustration" aria-hidden="true"><div class="sun-halo"></div><div class="sand-hill hill-back"></div><div class="sand-hill hill-front"></div><div class="eggs"><span></span><span></span><span></span></div><div class="sand-line sand-1"></div><div class="sand-line sand-2"></div><div class="sand-line sand-3"></div><span class="story-spark spark-1">✳</span><span class="story-spark spark-2">✦</span></div>
-        <div class="story-copy"><span class="small-label">02 / BEHIND EVERY NEST</span><h2>Conservation is<br><em>a collective effort.</em></h2><p>At TRACC, sea turtle protection involves dedicated wardens, researchers, and volunteers. Each nest record reflects the care and monitoring that takes place long after the eggs are relocated.</p><p>This portal helps make that work visible while respecting the need to protect sensitive nesting information.</p><div class="story-highlight"><span aria-hidden="true">✦</span><span>Real conservation is built on careful monitoring, transparent records, and the people who show up every day.</span></div></div>
+        <div class="story-copy"><span class="small-label" data-i18n="storyKicker">02 / BEHIND EVERY NEST</span><h2><span data-i18n="storyHeading1">Conservation is</span><em data-i18n="storyHeading2">a collective effort.</em></h2><p data-i18n="storyP1">At TRACC, sea turtle protection involves dedicated wardens, researchers, and volunteers. Each nest record reflects the care and monitoring that takes place long after the eggs are relocated.</p><p data-i18n="storyP2">This portal helps make that work visible while respecting the need to protect sensitive nesting information.</p><div class="story-highlight"><span aria-hidden="true">✦</span><span data-i18n="storyQuote">Real conservation is built on careful monitoring, transparent records, and the people who show up every day.</span></div></div>
       </div>
     </section>
 
     <section class="sector-section section-spacing" id="sectors" aria-labelledby="sectorTitle"><div class="container sector-layout">
-      <div class="sector-info"><span class="small-label">03 / NESTING LOCATIONS</span><h2 id="sectorTitle">A sense of <em>place.</em></h2>
-      <p>The beach sectors help our wardens describe where a nest was found around Pom Pom Island without revealing precise GPS coordinates. Explore the sectors shown on the original TRACC reference map.</p>
-      <div class="sector-selected" id="sectorSelected" aria-live="polite"><span class="sector-selected-dot">◎</span><div><strong>Pom Pom Island sector map</strong><span>Select a nest's “View on map” link to see its reported sector here.</span></div></div>
-      <p class="sector-note">Sector labels are generalized site references, not pinpoint nest locations. The background image is TRACC's supplied sector reference, reproduced without altering boundaries.</p>
-      <a href="#nests" class="btn btn-dark">Browse nests <span aria-hidden="true">↗</span></a></div>
-      <div class="sector-map-card"><div class="sector-map-top"><span>TRACC FIELD REFERENCE / POM POM ISLAND</span><span>North ↑</span></div>
-      <a href="./assets/pom-pom-sector-map.jpg" target="_blank" rel="noopener noreferrer" aria-label="Open the Pom Pom Island nesting sector map in full size"><img src="./assets/pom-pom-sector-map.jpg" loading="lazy" alt="Pom Pom Island nesting sector reference map with labelled beach sectors A1 through G2 and north arrow"></a>
-      <div class="sector-map-footer"><span>Find your sector code on the map</span><span>Tap to enlarge ↗</span></div></div>
+      <div class="sector-info"><span class="small-label" data-i18n="sectorKicker">03 / NESTING LOCATIONS</span><h2 id="sectorTitle"><span data-i18n="sectorHeading1">A sense of</span> <em data-i18n="sectorHeading2">place.</em></h2>
+      <p data-i18n="sectorDescription">The beach sectors help our wardens describe where a nest was found around Pom Pom Island without revealing precise GPS coordinates. Explore the sectors shown on the original TRACC reference map.</p>
+      <div class="sector-selected" id="sectorSelected" aria-live="polite"><span class="sector-selected-dot">◎</span><div><strong data-i18n="sectorDefault">Pom Pom Island sector map</strong><span data-i18n="sectorDefaultHint">Select a nest's “View on map” link to see its reported sector here.</span></div></div>
+      <p class="sector-note" data-i18n="sectorNote">Sector labels are generalized site references, not pinpoint nest locations. The background image is TRACC's supplied sector reference, reproduced without altering boundaries.</p>
+      <a href="#nests" class="btn btn-dark"><span data-i18n="browseNests">Browse nests</span> <span aria-hidden="true">↗</span></a></div>
+      <div class="sector-map-card"><div class="sector-map-top"><span data-i18n="mapKicker">TRACC FIELD REFERENCE / POM POM ISLAND</span><span data-i18n="north">North ↑</span></div>
+      <a href="./assets/pom-pom-sector-map.jpg" target="_blank" rel="noopener noreferrer" aria-label="Open the Pom Pom Island nesting sector map in full size" data-i18n-aria-label="mapOpen"><img src="./assets/pom-pom-sector-map.jpg" loading="lazy" alt="Pom Pom Island nesting sector reference map with labelled beach sectors A1 through G2 and north arrow" data-i18n-alt="mapAlt"></a>
+      <div class="sector-map-footer"><span data-i18n="mapFind">Find your sector code on the map</span><span data-i18n="mapEnlarge">Tap to enlarge ↗</span></div></div>
     </div></section>
 
-    <section class="how-section section-spacing" id="how-it-works"><div class="container"><div class="section-topline"><span class="small-label">04 / UNDERSTANDING THE DATA</span><span class="section-topline-rule"></span></div><div class="how-heading"><h2>From sand to <em>sea.</em></h2><p>What happens after a nest enters the hatchery?</p></div><div class="steps"><article class="step"><span class="step-num">01</span><div class="step-icon">◌</div><h3>Nest relocation</h3><p>Wardens record the relocation date, species, and number of eggs transferred to the hatchery.</p></article><article class="step"><span class="step-num">02</span><div class="step-icon">◔</div><h3>Incubating &amp; Emergence Soon</h3><p>From day 50 to day 60 after relocation, a still-incubating nest is labelled “Emergence Soon” as an estimated monitoring phase. Only wardens can confirm actual emergence, subject to approval.</p></article><article class="step"><span class="step-num">03</span><div class="step-icon">✳</div><h3>Emergence</h3><p>When hatchlings emerge, wardens record observed dates and numbers rather than predicting outcomes.</p></article><article class="step"><span class="step-num">04</span><div class="step-icon">↗</div><h3>Excavation & results</h3><p>After appropriate monitoring and nest excavation, confirmed hatching and emergence outcomes can be published.</p></article></div><p class="method-note"><strong>About the rates:</strong> Hatching success is displayed as confirmed hatched eggs ÷ eggs relocated, and emergence success as hatchlings emerged ÷ eggs relocated. Both are shown only when counts have been verified after nest excavation.</p></div></section>
+    <section class="how-section section-spacing" id="how-it-works"><div class="container"><div class="section-topline"><span class="small-label" data-i18n="howKicker">04 / UNDERSTANDING THE DATA</span><span class="section-topline-rule"></span></div><div class="how-heading"><h2><span data-i18n="howHeading1">From sand to</span> <em data-i18n="howHeading2">sea.</em></h2><p data-i18n="howDescription">What happens after a nest enters the hatchery?</p></div><div class="steps"><article class="step"><span class="step-num">01</span><div class="step-icon">◌</div><h3 data-i18n="step1">Nest relocation</h3><p data-i18n="step1Body">Wardens record the relocation date, species, and number of eggs transferred to the hatchery.</p></article><article class="step"><span class="step-num">02</span><div class="step-icon">◔</div><h3 data-i18n="step2">Incubating &amp; Emergence Soon</h3><p data-i18n="step2Body">From day 50 to day 60 after relocation, a still-incubating nest is labelled “Emergence Soon” as an estimated monitoring phase. Only wardens can confirm actual emergence, subject to approval.</p></article><article class="step"><span class="step-num">03</span><div class="step-icon">✳</div><h3 data-i18n="step3">Emergence</h3><p data-i18n="step3Body">When hatchlings emerge, wardens record observed dates and numbers rather than predicting outcomes.</p></article><article class="step"><span class="step-num">04</span><div class="step-icon">↗</div><h3 data-i18n="step4">Excavation & results</h3><p data-i18n="step4Body">After appropriate monitoring and nest excavation, confirmed hatching and emergence outcomes can be published.</p></article></div><p class="method-note"><strong data-i18n="ratesHeading">About the rates:</strong> <span data-i18n="ratesBody">Hatching success is displayed as confirmed hatched eggs ÷ eggs relocated, and emergence success as hatchlings emerged ÷ eggs relocated. Both are shown only when counts have been verified after nest excavation.</span></p></div></section>
   </main>
 <footer class="footer">
     <div class="container footer-inner">
-      <div><div class="footer-brand"><img src="./assets/tracc-logo.webp" alt="TRACC · Tropical Research and Conservation Centre" class="footer-logo"></div><p>Tropical Research and Conservation Centre<br>Pom Pom Island, Semporna, Sabah</p>
-        <p class="footer-disclaimer">Updated regularly by TRACC staff.<br>Unauthorized scraping, reproduction, or use of this protected data for external research is strictly prohibited.</p>
+      <div><div class="footer-brand"><img src="./assets/tracc-logo.webp" alt="TRACC · Tropical Research and Conservation Centre" class="footer-logo"></div><p>Tropical Research and Conservation Centre<br><span data-i18n="footerLocation">Pom Pom Island, Semporna, Sabah</span></p>
+        <p class="footer-disclaimer"><span data-i18n="footerUpdated">Updated regularly by TRACC staff.</span><br><span data-i18n="footerDisclaimer">Unauthorized scraping, reproduction, or use of this protected data for external research is strictly prohibited.</span></p>
       </div>
       <div class="footer-right">
-        <div class="footer-links"><a href="#impact">Hatchery statistics</a><a href="#nests" data-i18n="explore">Explore nests</a><a href="./admin.html">Staff portal</a></div>
-        <div class="footer-social"><strong>More information</strong>
-          <a id="instagramLink" href="https://www.instagram.com/traccborneo/" target="_blank" rel="noopener noreferrer" aria-label="TRACC Instagram (opens in new tab)" title="TRACC on Instagram">
+        <div class="footer-links"><a href="#impact" data-i18n="footerStats">Hatchery statistics</a><a href="#nests" data-i18n="explore">Explore nests</a><a href="./admin.html" data-i18n="staff">Staff portal</a></div>
+        <div class="footer-social"><strong data-i18n="moreInfo">More information</strong>
+          <a id="instagramLink" href="https://www.instagram.com/traccborneo/" target="_blank" rel="noopener noreferrer" aria-label="TRACC Instagram (opens in new tab)" data-i18n-aria-label="instaAria" title="TRACC on Instagram" data-i18n-title="instaTitle">
             <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5"></rect><circle cx="12" cy="12" r="4.2"></circle><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"></circle></svg><span>Instagram</span></a>
-          <a id="websiteLink" href="https://tracc.org/" target="_blank" rel="noopener noreferrer" aria-label="TRACC official website (opens in new tab)" title="TRACC Website">
-            <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3a15 15 0 0 0 0 18M12 3a15 15 0 0 1 0 18"></path></svg><span>Website</span></a>
+          <a id="websiteLink" href="https://tracc.org/" target="_blank" rel="noopener noreferrer" aria-label="TRACC official website (opens in new tab)" data-i18n-aria-label="websiteAria" title="TRACC Website" data-i18n-title="websiteTitle">
+            <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3a15 15 0 0 0 0 18M12 3a15 15 0 0 1 0 18"></path></svg><span data-i18n="website">Website</span></a>
         </div>
         <span id="copyright"></span>
       </div>
     </div>
   </footer>
 
-  <dialog id="nestDialog" class="nest-dialog" aria-labelledby="dialogTitle"><div class="dialog-shell"><button class="dialog-close" id="dialogClose" type="button" aria-label="Close nest details">×</button><div id="dialogContent"></div></div></dialog>
+  <dialog id="nestDialog" class="nest-dialog" aria-labelledby="dialogTitle"><div class="dialog-shell"><button class="dialog-close" id="dialogClose" type="button" aria-label="Close nest details" data-i18n-aria-label="closeDetails">×</button><div id="dialogContent"></div></div></dialog>
 </body>
 </html>
