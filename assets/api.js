@@ -22,13 +22,22 @@ async function parseResponse(response) {
 }
 export async function loadNests() {
   if (!isLive()) {
-    if(isDemo()) { const saved=readDemoStore(); if(saved) return saved.approved.filter(n=>n.published===true); }
+    const saved = isDemo() ? readDemoStore() : null;
     const file = SITE.DATA_SOURCE === 'json' ? SITE.DATA_FILE : SITE.DEMO_FILE;
-    const response = await fetch(file, {cache:'no-store'});
-    if (!response.ok) throw Error(`Cannot load ${file}`);
-    const rows = await response.json();
-    if (!Array.isArray(rows)) throw Error('Expected a JSON array of approved nests.');
-    return rows.filter(n => n.published === true);
+    try {
+      const response = await fetch(file, {cache:'no-store'});
+      if (!response.ok) throw Error(`Cannot load ${file}`);
+      const rows = await response.json();
+      if (!Array.isArray(rows)) throw Error('Expected a JSON array of approved nests.');
+      // Refresh the shared fictional seed set without losing locally approved test records.
+      // Stored records take precedence when an ID has already been edited in this browser.
+      const merged = new Map(rows.filter(n => n.published === true).map(n => [n.id,n]));
+      if(saved) for(const n of saved.approved) if(n.published===true) merged.set(n.id,n);
+      return [...merged.values()];
+    } catch(error) {
+      if(saved) return saved.approved.filter(n => n.published===true);
+      throw error;
+    }
   }
   checkSetup();
   // Table contains approved records only; drafts are stored separately and inaccessible anonymously.
