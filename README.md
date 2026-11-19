@@ -28,3 +28,7 @@ This demo can test mobile layout, validation, entry modes, the simulated approva
 The relocation egg-count rule is: relocated eggs **exclude** broken and deformed eggs. Healthy and deformed **released hatchlings** both count toward release totals when documented.
 
 See `testing.html` or `docs/FIELD_TEST_CHECKLIST.md` for the testing checklist.
+
+## Excavation outcomes (field-test update)
+
+The seven categories are Hatchlings (live recovered and released), Undeveloped, Stage 1, Stage 2, Stage 3, Dead Turtle (dead hatchlings found in the nest), Unsure. Count dead embryos still in eggs by stage. Counts are separate from relocation egg counts. Total released = cumulative healthy + deformed pre-excavation releases + live recovered hatchlings released. The fictional staff breakdown is seeded from `data/demo-excavation.json` for the admin demo, not included in public nest cards. As this is a public repository, these fictional breakdowns are not security-protected; never store genuine excavation data here. Live Supabase schema and validation must be updated and tested before production use.

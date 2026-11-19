@@ -1,5 +1,5 @@
 import { downloadXlsx } from './xlsx-export.js';
-import {checkMilestone,applyMilestone,canSubmitType,canSeeProtected} from './workflow.js';
+import {checkMilestone,applyMilestone,canSubmitType,canSeeProtected,calculateRelease,validateExcavation} from './workflow.js';
 import {saveEncryptedDraft,readEncryptedDraft,clearEncryptedDraft,hasEncryptedDraft} from './encrypted-drafts.js';
 import { SITE } from './config.js';
 import {readDemoStore,writeDemoStore,clearDemoStore} from './demo-store.js';
@@ -16,12 +16,12 @@ const publicKeys = ['id','season','species','status','date_laid','date_relocated
 const privateKeys = ['nest_code','nest_location','sector','hatchery_position','relocated_by_nest',
   'relocated_by_hatchery','broken_eggs','deformed_eggs','healthy_hatchlings','deformed_hatchlings',
   'undeveloped_eggs','dead_egg_stage1','dead_egg_stage2','dead_egg_stage3','attacked_eggs',
-  'dead_hatchlings','total_excavated','excavation_difference','hatching_method','hatching_time',
+  'dead_hatchlings','excavation_hatchlings','unsure_eggs','total_excavated','excavation_difference','hatching_method','hatching_time',
   'logger_id','turtle_present','ccl','ccw','tag_left','tag_right','private_notes'];
 const decimal = new Set(['mother_ccl_cm','mother_ccw_cm']);
 const numeric = new Set(['season','egg_count','hatched_eggs','emerged_hatchlings','released_hatchlings',
   'broken_eggs','deformed_eggs','healthy_hatchlings','deformed_hatchlings','undeveloped_eggs',
-  'dead_egg_stage1','dead_egg_stage2','dead_egg_stage3','attacked_eggs','dead_hatchlings',
+  'dead_egg_stage1','dead_egg_stage2','dead_egg_stage3','attacked_eggs','dead_hatchlings','excavation_hatchlings','unsure_eggs',
   'total_excavated','excavation_difference','mother_ccl_cm','mother_ccw_cm']);
 let approved=[],submissions=[],researchById=new Map(),auditHistory=[],selectedId=null,profile={role:'local-preview'};
 let editMode='new_nest',entryMode='quick',supersedesId=null;
@@ -82,13 +82,12 @@ function readMetadata() {
   return {pub,priv};
 }
 function updateReleased() {
-  const a=form.elements.namedItem('healthy_hatchlings').value;
-  const b=form.elements.namedItem('deformed_hatchlings').value;
-  const total=form.elements.namedItem('released_hatchlings');
-  if(a!=='' && b!=='' && Number.isInteger(Number(a)) && Number.isInteger(Number(b)) && Number(a)>=0 && Number(b)>=0)
-    total.value=String(Number(a)+Number(b));
-  else if(a!=='' || b!=='')total.value='';
-  else if(!selectedId)total.value='';
+  const previous=approved.find(n=>n.id===selectedId);
+  try {
+    const data=readValues(['healthy_hatchlings','deformed_hatchlings','excavation_hatchlings']);
+    const total=calculateRelease(data,previous,researchById.get(selectedId)||{});
+    form.elements.namedItem('released_hatchlings').value=total??'';
+  }catch{form.elements.namedItem('released_hatchlings').value='';}
 }
 function syncCalendarSeason() {
   const date=form.elements.namedItem('date_relocated').value;
@@ -124,10 +123,13 @@ function readMilestoneProposal() {
     const raw=fm.elements.namedItem(k).value.trim();
     if(raw!=='')pub[k]=['hatched_eggs','emerged_hatchlings'].includes(k)?Number(raw):raw;
   }
-  for(const k of ['healthy_hatchlings','deformed_hatchlings','dead_hatchlings','total_excavated','undeveloped_eggs','dead_egg_stage1','dead_egg_stage2','dead_egg_stage3','attacked_eggs','hatching_method','hatching_time','private_notes']) {
+  for(const k of ['healthy_hatchlings','deformed_hatchlings','excavation_hatchlings','unsure_eggs','dead_hatchlings','total_excavated','undeveloped_eggs','dead_egg_stage1','dead_egg_stage2','dead_egg_stage3','attacked_eggs','hatching_method','hatching_time','private_notes']) {
     const raw=fm.elements.namedItem(k).value.trim();if(raw!=='')priv[k]=['hatching_method','hatching_time','private_notes'].includes(k)?raw:Number(raw);
   }
-  if('healthy_hatchlings' in priv && 'deformed_hatchlings' in priv)pub.released_hatchlings=priv.healthy_hatchlings+priv.deformed_hatchlings;
+  if(['healthy_hatchlings','deformed_hatchlings','excavation_hatchlings'].some(k=>k in priv)){
+    const total=calculateRelease(priv,nest,{},true);
+    if(total!==null)pub.released_hatchlings=total;
+  }
   return {payload:checkMilestone(nest,pub,priv).publicDelta,research_payload:priv};
 }
 async function submitMilestone(event){
@@ -254,13 +256,8 @@ function readValues(keys) {
 function readProposal() {
   const p=readValues(publicKeys),r=readValues(privateKeys);
   const {pub,priv}=readMetadata();p.public_metadata=pub;r.custom_private_metadata=priv;
-  // By TRACC's definition, both healthy and deformed hatchlings are released.
-  // Both category counts are required, including explicit zeros, before publishing a calculated total.
-  if((r.healthy_hatchlings===null)!==(r.deformed_hatchlings===null))
-    throw Error('Enter both healthy and deformed hatchling release counts (use 0 when none), or leave both blank.');
-  if(r.healthy_hatchlings!==null && r.deformed_hatchlings!==null)
-    p.released_hatchlings=r.healthy_hatchlings+r.deformed_hatchlings;
-  else if(!selectedId) p.released_hatchlings=null;
+  p.released_hatchlings=calculateRelease(r,approved.find(n=>n.id===selectedId),researchById.get(selectedId)||{});
+  validateExcavation(p,r,p.status==='excavated');
   // Store original mother tags/measures in protected research, but optionally share
   // an approved subset publicly when at least one actual tag number exists.
   const sharingMother=$('shareMotherDetails').checked;
@@ -520,7 +517,7 @@ function bind() {
   $('clearDraft').addEventListener('click',()=>{if(confirm('Delete the encrypted draft saved on this device?')){clearEncryptedDraft();notice('Encrypted draft deleted.');}});
   $('addMetadata').addEventListener('click',()=>{try{addMetadataRow();}catch(e){notice(e.message,true);}});
   form.elements.namedItem('date_relocated').addEventListener('change',syncCalendarSeason);
-  for(const key of ['healthy_hatchlings','deformed_hatchlings'])form.elements.namedItem(key).addEventListener('input',updateReleased);
+  for(const key of ['healthy_hatchlings','deformed_hatchlings','excavation_hatchlings'])form.elements.namedItem(key).addEventListener('input',updateReleased);
   $('adminSearch').addEventListener('input',renderApproved);form.addEventListener('submit',submit);
   $('importButton').addEventListener('click',()=>$('importInput').click());$('importInput').addEventListener('change',importRequest);
   $('exportButton').addEventListener('click',exportApproved);
@@ -539,7 +536,17 @@ async function start() {
     const saved=readDemoStore();if(saved){submissions=saved.submissions;researchById=new Map(saved.research);auditHistory=saved.audit;}
     $('exportSection').hidden=profile.role==='warden';
     $('importButton').hidden=profile.role==='warden';$('exportButton').hidden=profile.role==='warden';
-    try{approved=await loadApprovedStaffNests();showEditor();newNest();renderApproved();renderReview();refreshExportOptions();renderAudit();notice(`TEST MODE (${profile.role.toUpperCase()}): fictional records only. Changes are stored on this browser, not shared across devices.`);}
+    try{approved=await loadApprovedStaffNests();
+      if(isDemo() && profile.role==='admin'){
+        try{
+          const response=await fetch('./data/demo-excavation.json',{cache:'no-store'});
+          if(!response.ok)throw Error('Cannot load fictional excavation details');
+          const seed=await response.json();
+          const changed=new Set([...auditHistory.map(a=>a.nest_id),...submissions.filter(q=>q.review_state==='approved').map(q=>q.nest_id)]);
+          for(const [id,record] of Object.entries(seed))if(!changed.has(id)&&approved.some(n=>n.id===id))researchById.set(id,{...researchById.get(id),...record});
+        }catch(error){console.warn('Fictional excavation details unavailable:',error);}
+      }
+      showEditor();newNest();renderApproved();renderReview();refreshExportOptions();renderAudit();notice(`TEST MODE (${profile.role.toUpperCase()}): fictional records only. Changes are stored on this browser, not shared across devices.`);}
     catch(e){notice(`Cannot load local data: ${e.message}`,true);}
   }else if(getSession()?.access_token){try{await authenticate();}catch{showLogin();notice('Please sign in again.');}}
   else{showLogin();notice('Sign in with a TRACC-approved staff account.');}

@@ -32,7 +32,8 @@ export async function loadNests() {
       // Refresh the shared fictional seed set without losing locally approved test records.
       // Stored records take precedence when an ID has already been edited in this browser.
       const merged = new Map(rows.filter(n => n.published === true).map(n => [n.id,n]));
-      if(saved) for(const n of saved.approved) if(n.published===true) merged.set(n.id,n);
+      const locallyChanged=new Set([...((saved?.audit)||[]).map(a=>a.nest_id),...((saved?.submissions)||[]).filter(q=>q.review_state==='approved').map(q=>q.nest_id)]);
+      if(saved) for(const n of saved.approved) if(n.published===true && (!merged.has(n.id)||locallyChanged.has(n.id)||n.updated_at!==merged.get(n.id).updated_at)) merged.set(n.id,n);
       return [...merged.values()];
     } catch(error) {
       if(saved) return saved.approved.filter(n => n.published===true);
